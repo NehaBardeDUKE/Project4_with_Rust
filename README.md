@@ -1,8 +1,8 @@
 # Project: Microservice that creates a bag of words by combining all files on an EFS mount 
 
-For NLP tasks, bag of words is generally needed to determine the way forward for a a given use case, be it for EDA, determining the choice of algorithm, weeding out stop words in a naive approach or even to implement a solution that wont be computationally expensive.
+For NLP tasks, bag of words is generally needed to determine the way forward for a given use case, be it for EDA, determining the choice of algorithm, weeding out stop words in a naive approach or even to implement a solution that wont be computationally expensive.
 
-In this project I have made use of the EFS (Elastic File System) and AWS lambda functions to further "save up" on costs. Both these components charge u for the usage rather than leveraging a fixed cost (when they are not actively being called or used, you dont get charge!). So if you are using a computatinally inexpensive solution like bage of words and pairing it with these componenets, this project is a great place to start as a POC.
+In this project I have made use of the EFS (Elastic File System) and AWS lambda functions to further "save up" on costs. Both these components charge u for the usage rather than leveraging a fixed cost (when they are not actively being called or used, you dont get charge!). So if you are using a computationally inexpensive solution like bag of words and pairing it with these components, this project is a great place to start as a POC. This project returns a bag of words combining the contents of all the documents in a given mount.
 
 Here I have mounted the EFS using cloud 9 on an EC2 instance and then connected the lambda functions to the EFS mount points.
 I have also made use of step functions, so that all you have to do is start the execution using a set trigger word and it automatically calls all the microservices in the state machine. A rough architecture is as below and the setup details can be seen in the "References" section of this readme-
