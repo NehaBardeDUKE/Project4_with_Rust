@@ -1,13 +1,10 @@
 use lambda_runtime::{run, service_fn, Error, LambdaEvent};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
-//use std::error::Error;
-use std::fs::File;
-use std::io::prelude::*;
 
 #[derive(Deserialize)]
 struct Request {
-    stmt: String,
+    content: String,
 }
 
 #[derive(Serialize)]
@@ -33,26 +30,12 @@ async fn list_files() -> Result<String, Error> {
     Ok(files)
 }
 
-async fn list_contents() -> Result<String, Error> {
-    let mut contents = String::new();
-    for entry in std::fs::read_dir("/mnt/efs")? {
-        let entry = entry?;
-        let path = entry.path();
-        if path.is_file() {
-            let mut file = File::open(path)?;
-            file.read_to_string(&mut contents)?;
-        }
-    }
-    Ok(contents)
-}
-
 async fn function_handler(event: LambdaEvent<Request>) -> Result<Response, Error> {
     // Extract some useful info from the request
-    let stmt = event.payload.stmt;
+    let content = event.payload.content;
     let files = list_files().await?;
     //let mut bag_of_words = HashMap::new();
-    let content = list_contents().await?;
-    let bag_of_words = readfiles::tokenize(content.as_str());
+    let bag_of_words = tokenizer::tokenize(content.as_str());
     // Prepare the response
     let resp = Response {
         req_id: event.context.request_id,

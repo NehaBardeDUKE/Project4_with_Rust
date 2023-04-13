@@ -20,6 +20,6 @@ invoke:
 	cargo lambda invoke --remote \
   		--data-ascii '{"stmt": "start"}' \
   		--output-format json \
-  		readfiles
+  		fileread
 			
 all: format lint test run
