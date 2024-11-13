@@ -1,0 +1,32 @@
+import numpy as np
+from sklearn.metrics import precision_score, recall_score, accuracy_score
+
+# Define a range of thresholds to evaluate
+thresholds = np.linspace(0, 1, 100)
+precision_list = []
+recall_list = []
+accuracy_list = []
+
+# Loop through each threshold and calculate metrics
+for threshold in thresholds:
+    df['predicted_label'] = (df['score'] >= threshold).astype(int)
+    
+    precision = precision_score(df['label'], df['predicted_label'])
+    recall = recall_score(df['label'], df['predicted_label'])
+    accuracy = accuracy_score(df['label'], df['predicted_label'])
+    
+    precision_list.append(precision)
+    recall_list.append(recall)
+    accuracy_list.append(accuracy)
+
+# Plot Precision, Recall, and Accuracy as functions of the threshold
+plt.figure(figsize=(12, 8))
+plt.plot(thresholds, precision_list, label='Precision', marker='o')
+plt.plot(thresholds, recall_list, label='Recall', marker='x')
+plt.plot(thresholds, accuracy_list, label='Accuracy', marker='s')
+plt.axvline(x=0.5, color='green', linestyle='--', label='Initial Threshold Example')
+plt.title('Precision, Recall, and Accuracy vs. Threshold')
+plt.xlabel('Threshold')
+plt.ylabel('Metric Value')
+plt.legend()
+plt.show()
